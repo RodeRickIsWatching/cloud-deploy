@@ -111,7 +111,7 @@ export default function HomePage() {
     try {
       setIsBuilding(true);
       const { args, sourceHash } = await prepareBuildMethodCall({ method: buildMethod, project: currentProject });
-      const raw = await dispatchSelectedMethod({
+    const raw = await dispatchSelectedMethod({
         parsedAbi: settings.parsedAbi,
         selectedMethod: settings.buildMethod,
         args,
@@ -124,7 +124,9 @@ export default function HomePage() {
       });
       const artifactHash = await hashPayload(raw);
       const reviewPayload = { hashes: { sourceHash, artifactHash }, payload: raw };
-      setBuildCache({ targetFile: selectedTomlPath, reviewPayload });
+      if (!options?.silent) {
+        setBuildCache({ targetFile: selectedTomlPath, reviewPayload });
+      }
       if (!options?.silent) {
         patchTab(tabId, { status: "success", raw });
       }
@@ -209,10 +211,6 @@ export default function HomePage() {
       patchTab(tabId, { status: "error", error: getErrorMessage(error, "Failed to fetch RPC transaction.") });
     }
   };
-
-  useEffect(() => {
-    setBuildCache(null);
-  }, [selectedTomlPath, project]);
 
   useEffect(() => {
     const pendingTabs = findPendingTransactionTabs(tabs);

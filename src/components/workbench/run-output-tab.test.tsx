@@ -28,7 +28,7 @@ describe("RunOutputTab", () => {
     renderWithProviders(<RunOutputTab tab={baseTab} />);
 
     expect(screen.getByText("Raw Output")).toBeInTheDocument();
-    expect(screen.getByText(/\"result\": \"0x1234\"/)).toBeInTheDocument();
+    expect(screen.getByText(/"result": "0x1234"/)).toBeInTheDocument();
     expect(screen.getByText("ABI Item")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Copy Raw" }));

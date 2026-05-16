@@ -70,6 +70,7 @@ The `Public API` column is a selection aid. The utility module's exported functi
 | `rpc-transaction-client` | `src/utils/request/rpc-transaction-client.ts` | active | Fetches transaction details from the configured RPC by transaction hash | `fetchRpcTransaction` | On-chain sender | Used to populate Deploy tab transaction details without leaving the app |
 | `download-utils` | `src/utils/download-utils.ts` | active | Download JSON payloads and results from the browser | `downloadJson` | Review, Deploy | Browser-only utility |
 | `format-utils` | `src/utils/format-utils.ts` | active | Format hashes, addresses, and statuses for display | `shortHash`, `shortAddress`, `formatStatus` | UI components | Display-only; no business logic |
+| `workbench-layout-utils` | `src/utils/workbench-layout-utils.ts` | active | Pure helpers for workbench pane layout ratios | `clampRatio` | Workbench layout components | Keep non-component exports outside React component files for fast refresh |
 
 ## Store Registry
 

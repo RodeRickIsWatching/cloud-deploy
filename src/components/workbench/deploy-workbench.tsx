@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { WorkbenchLayout } from "@/types/workbench";
-import { clampRatio, ResizeHandle } from "./resizable-panels";
+import { clampRatio } from "@/utils/workbench-layout-utils";
+import { ResizeHandle } from "./resizable-panels";
 
 type DeployWorkbenchProps = {
   layout: WorkbenchLayout;

@@ -11,10 +11,6 @@ type ResizeHandleProps = {
   onDrag: (delta: DragDelta) => void;
 };
 
-export function clampRatio(value: number) {
-  return Math.min(85, Math.max(15, value));
-}
-
 export function ResizeHandle({ ariaLabel, orientation = "vertical", onDrag }: ResizeHandleProps) {
   const startPoint = useRef<{ x: number; y: number } | null>(null);
 
