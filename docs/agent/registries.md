@@ -62,6 +62,16 @@ The `Public API` column is a selection aid. The utility module's exported functi
 | `download-utils` | `src/utils/download-utils.ts` | active | Download JSON payloads and results from the browser | `downloadJson` | Review, Deploy | Browser-only utility |
 | `format-utils` | `src/utils/format-utils.ts` | active | Format hashes, addresses, and statuses for display | `shortHash`, `shortAddress`, `formatStatus` | UI components | Display-only; no business logic |
 
+## Store Registry
+
+Persistent and runtime stores live in `src/store`. Store modules own browser state boundaries and should not import UI components.
+
+| Store | Path | Status | Responsibility | Public API | Used By | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| `settings-store` | `src/store/settings-store.ts` | active | Persists RPC endpoint, Lyquid ID, ABI, Build Method, Deploy Method, and derived ABI state | `useSettingsStore` | Settings, Build, Deploy | Only settings are persisted here |
+| `deploy-session-store` | `src/store/deploy-session-store.ts` | active | Holds legacy wizard runtime upload/build/review/deploy state | `useDeploySessionStore` | Legacy wizard components | Do not persist uploaded files or run outputs |
+| `workbench-store` | `src/store/workbench-store.ts` | active | Persists compiler workbench layout ratios and latest 10 deploy history records | `useWorkbenchStore` | Workbench page | Does not persist uploaded files, current tabs, build payloads, tx details, or run raw output |
+
 ## Config Registry
 
 Config modules live in `src/config`. Use this directory for constants, defaults, static options, route paths, storage keys, and deploy flow definitions.
@@ -75,6 +85,7 @@ The `Exports` column is a selection aid. The config module's actual exports are 
 | `app-config` | `src/config/app-config.ts` | active | App-level product constants | `appName` | Layout, metadata | No runtime state |
 | `routes-config` | `src/config/routes-config.ts` | active | Route paths and route labels | `routes` | Navigation, links | Keep Vite page entry composition consistent |
 | `deploy-steps-config` | `src/config/deploy-steps-config.ts` | active | Upload, Build, Review, Deploy step definitions | `deploySteps` | `ProgressSteps`, pages | Do not duplicate step labels in components |
-| `storage-config` | `src/config/storage-config.ts` | active | Local storage keys and persisted setting version | `settingsStorageKey`, `settingsVersion` | `settings-store` | Used by persisted store only |
+| `storage-config` | `src/config/storage-config.ts` | active | Local storage keys and persisted store versions | `settingsStorageKey`, `settingsVersion`, `workbenchStorageKey`, `workbenchStorageVersion` | `settings-store`, `workbench-store` | Used by persisted stores only |
 | `upload-config` | `src/config/upload-config.ts` | active | Upload limits and accepted source inputs | `acceptedProjectFormats`, `maxUploadSize` | Upload step, `file-utils` | Folder-first upload; keep UI and file handling aligned |
 | `default-settings-config` | `src/config/default-settings-config.ts` | active | Default settings shown in Settings | `defaultSettings` | `settings-store`, `SettingsDialog` | Includes empty ABI defaults for the MVP |
+| `workbench-config` | `src/config/workbench-config.ts` | active | Static workbench defaults and limits | `defaultWorkbenchLayout`, `deployHistoryLimit` | Workbench store, upload controls | No runtime state |
