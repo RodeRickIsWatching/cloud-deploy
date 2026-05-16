@@ -9,15 +9,36 @@ type AppShellProps = {
   currentStep: DeployStepId;
   completedSteps: DeployStepId[];
   walletLabel: string;
+  walletAddress?: string;
   onConnectWallet: () => void;
+  onCopyWalletAddress: () => void;
+  onDisconnectWallet: () => void;
   onOpenSettings: () => void;
   onStepBack: (step: DeployStepId) => void;
 };
 
-export function AppShell({ children, currentStep, completedSteps, walletLabel, onConnectWallet, onOpenSettings, onStepBack }: AppShellProps) {
+export function AppShell({
+  children,
+  currentStep,
+  completedSteps,
+  walletLabel,
+  walletAddress,
+  onConnectWallet,
+  onCopyWalletAddress,
+  onDisconnectWallet,
+  onOpenSettings,
+  onStepBack
+}: AppShellProps) {
   return (
     <div className="flex h-screen flex-col bg-background">
-      <AppHeader walletLabel={walletLabel} onConnectWallet={onConnectWallet} onOpenSettings={onOpenSettings} />
+      <AppHeader
+        walletLabel={walletLabel}
+        walletAddress={walletAddress}
+        onConnectWallet={onConnectWallet}
+        onCopyWalletAddress={onCopyWalletAddress}
+        onDisconnectWallet={onDisconnectWallet}
+        onOpenSettings={onOpenSettings}
+      />
       <main className="flex min-h-0 flex-1 flex-col">
         <section className="border-b bg-card px-6 py-5">
           <ProgressSteps steps={deploySteps} currentStep={currentStep} completedSteps={completedSteps} onStepBack={onStepBack} />

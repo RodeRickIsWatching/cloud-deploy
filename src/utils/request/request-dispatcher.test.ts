@@ -10,7 +10,7 @@ describe("request-dispatcher", () => {
     const context: RequestSenderContext = {
       rpcEndpoint: "http://localhost:8545",
       accountAddress: "0x0000000000000000000000000000000000000001",
-      walletClient: {},
+      walletClient: { sendTransaction: vi.fn() },
       publicClient: {},
       offChainFetch: vi.fn()
     };

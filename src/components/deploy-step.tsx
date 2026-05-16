@@ -5,10 +5,8 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Button } from "@/components/ui/button";
 
 type DeployStepProps = {
-  lyquidId: string;
-  isUpdateDeploy: boolean;
-  isCheckingUpdateStatus?: boolean;
   isWalletConnected: boolean;
+  isDeploying?: boolean;
   result: DeployResult | null;
   onDeploy: () => void;
   onConnectWallet: () => void;
@@ -16,26 +14,18 @@ type DeployStepProps = {
 };
 
 export function DeployStep({
-  lyquidId,
-  isUpdateDeploy,
-  isCheckingUpdateStatus = false,
   isWalletConnected,
+  isDeploying = false,
   result,
   onDeploy,
   onConnectWallet,
   error
 }: DeployStepProps) {
-  const [confirmOpen, setConfirmOpen] = useState(false);
   const [connectWalletOpen, setConnectWalletOpen] = useState(false);
 
   const handleDeployClick = () => {
     if (!isWalletConnected) {
       setConnectWalletOpen(true);
-      return;
-    }
-
-    if (lyquidId && isUpdateDeploy) {
-      setConfirmOpen(true);
       return;
     }
 
@@ -47,29 +37,10 @@ export function DeployStep({
       {error ? <p className="rounded-md border border-destructive bg-card p-3 text-sm text-destructive">{error}</p> : null}
       <ResultSummary result={result} />
       <div className="flex justify-end">
-        <Button type="button" disabled={isCheckingUpdateStatus} onClick={handleDeployClick}>
-          {isCheckingUpdateStatus ? "Checking..." : "Deploy"}
+        <Button type="button" disabled={isDeploying} onClick={handleDeployClick}>
+          {isDeploying ? "Deploying..." : "Deploy"}
         </Button>
       </div>
-      <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Deploy as update to this Lyquid?</AlertDialogTitle>
-            <AlertDialogDescription>The current Lyquid ID already resolves to a deployed contract, so this deployment will be submitted as an update.</AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => {
-                setConfirmOpen(false);
-                onDeploy();
-              }}
-            >
-              Deploy as Update
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
       <AlertDialog open={connectWalletOpen} onOpenChange={setConnectWalletOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>

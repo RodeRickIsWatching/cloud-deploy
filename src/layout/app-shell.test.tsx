@@ -12,6 +12,8 @@ describe("AppShell", () => {
         completedSteps={[]}
         walletLabel="Connect Wallet"
         onConnectWallet={vi.fn()}
+        onCopyWalletAddress={vi.fn()}
+        onDisconnectWallet={vi.fn()}
         onOpenSettings={vi.fn()}
         onStepBack={vi.fn()}
       >

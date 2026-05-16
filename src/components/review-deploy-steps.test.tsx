@@ -20,21 +20,10 @@ describe("ReviewStep and DeployStep", () => {
     expect(screen.getByText("Download JSON")).toBeInTheDocument();
   });
 
-  it("asks for update confirmation only when the Lyquid has a deployed contract", async () => {
+  it("deploys normally when a Lyquid ID is set", async () => {
     const user = userEvent.setup();
     const onDeploy = vi.fn();
-    renderWithProviders(<DeployStep isWalletConnected isUpdateDeploy lyquidId="lyquid-1" result={null} onDeploy={onDeploy} onConnectWallet={vi.fn()} error={null} />);
-
-    await user.click(screen.getByRole("button", { name: "Deploy" }));
-    expect(screen.getByText("Deploy as update to this Lyquid?")).toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Deploy as Update" }));
-    expect(onDeploy).toHaveBeenCalledTimes(1);
-  });
-
-  it("deploys normally when a Lyquid ID is set but has no deployed contract", async () => {
-    const user = userEvent.setup();
-    const onDeploy = vi.fn();
-    renderWithProviders(<DeployStep isWalletConnected isUpdateDeploy={false} lyquidId="lyquid-1" result={null} onDeploy={onDeploy} onConnectWallet={vi.fn()} error={null} />);
+    renderWithProviders(<DeployStep isWalletConnected result={null} onDeploy={onDeploy} onConnectWallet={vi.fn()} error={null} />);
 
     await user.click(screen.getByRole("button", { name: "Deploy" }));
 
@@ -46,7 +35,7 @@ describe("ReviewStep and DeployStep", () => {
     const user = userEvent.setup();
     const onDeploy = vi.fn();
     const onConnectWallet = vi.fn();
-    renderWithProviders(<DeployStep isWalletConnected={false} isUpdateDeploy={false} lyquidId="" result={null} onDeploy={onDeploy} onConnectWallet={onConnectWallet} error={null} />);
+    renderWithProviders(<DeployStep isWalletConnected={false} result={null} onDeploy={onDeploy} onConnectWallet={onConnectWallet} error={null} />);
 
     await user.click(screen.getByRole("button", { name: "Deploy" }));
     expect(screen.getByText("Connect wallet to deploy")).toBeInTheDocument();
