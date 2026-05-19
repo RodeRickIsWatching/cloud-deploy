@@ -46,7 +46,7 @@ jobs:
 
           git fetch origin gh-pages
           git worktree add /tmp/cloud-deploy-gh-pages origin/gh-pages
-          rsync -a --delete --exclude ".git" dist/ /tmp/cloud-deploy-gh-pages/
+          rsync -a --checksum --exclude ".git" dist/ /tmp/cloud-deploy-gh-pages/
           touch /tmp/cloud-deploy-gh-pages/.nojekyll
 
           cd /tmp/cloud-deploy-gh-pages
